@@ -22,7 +22,6 @@ function createPool() {
     queueLimit: 0,
   };
 
-  // If a CA cert is provided (base64 encoded), use it for TLS
   if (DB_SSL_CA) {
     try {
       config.ssl = {
