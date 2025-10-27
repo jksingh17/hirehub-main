@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Receiver.module.css";
+import { API_BASE_URL } from "../../../config.js";
 
 const Receiver = () => {
   const [jobs, setJobs] = useState([]);
@@ -11,7 +12,9 @@ const Receiver = () => {
   const fetchJobs = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/jobs");
+      const response = await fetch(`${API_BASE_URL}/jobs`, {
+        credentials: 'include'
+      });
       const data = await response.json();
       setJobs(data);
     } catch (error) {

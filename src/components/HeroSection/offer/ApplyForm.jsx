@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../config.js";
 
 const ApplyForm = () => {
   const { jobId } = useParams();
@@ -33,9 +34,10 @@ const ApplyForm = () => {
    // data.append("resume", formData.resume);
 
     try {
-      const response = await fetch("http://localhost:5000/apply", {
+      const response = await fetch(`${API_BASE_URL}/apply`, {
         method: "POST",
-        body: data, // FormData handles multipart automatically
+        body: data,
+        credentials: 'include' // Important for cookies
       });
 
       if (response.ok) {

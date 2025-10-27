@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Provider.css";
+import { API_BASE_URL } from "../../../config.js";
 import ccc from "../../../assets/ccc.jpg"; // Use your actual image file name here
 const Provider = () => {
   const [jobs, setJobs] = useState([]);
@@ -12,7 +13,7 @@ const Provider = () => {
   // Fetch all jobs
   const fetchJobs = async () => {
     try {
-      const response = await fetch("http://localhost:5000/jobs");
+      const response = await fetch(`${API_BASE_URL}/jobs`);
       const data = await response.json();
       setJobs(data);
     } catch (error) {
@@ -29,9 +30,10 @@ const Provider = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/jobs", {
+      const response = await fetch(`${API_BASE_URL}/jobs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify(formData),
       });
 
@@ -50,7 +52,9 @@ const Provider = () => {
   // Fetch applicants for specific job
   const viewApplicants = async (jobId) => {
     try {
-      const response = await fetch(`http://localhost:5000/applicants/${jobId}`);
+      const response = await fetch(`${API_BASE_URL}/applicants/${jobId}`, {
+        credentials: 'include'
+      });
       const applicants = await response.json();
       const updatedJobs = jobs.map((job) =>
         job.id === jobId ? { ...job, applicants } : job
@@ -235,7 +239,7 @@ const Provider = () => {
                           <p><strong>Email:</strong> {app.email}</p>
                           <p><strong>Skills:</strong> {app.skills}</p>
                           <a
-                            href={`http://localhost:5000${app.resume}`}
+                            href={app.resume}
                             target="_blank"
                             rel="noreferrer"
                             style={{ color: "#007bff", fontWeight: "bold" }}
