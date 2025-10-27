@@ -25,13 +25,14 @@ const ApplyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = new FormData();
+  const data = new FormData();
     data.append("jobId", jobId);
     data.append("firstName", formData.firstName);
     data.append("lastName", formData.lastName);
     data.append("email", formData.email);
     data.append("skills", formData.skills);
-   // data.append("resume", formData.resume);
+  // append file for multipart upload
+  if (formData.resume) data.append("resume", formData.resume);
 
     try {
       const response = await fetch(`${API_BASE_URL}/apply`, {
